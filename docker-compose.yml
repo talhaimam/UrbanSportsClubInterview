@@ -1,0 +1,70 @@
+version: "3.4"
+
+services:
+
+  runtime:
+    image: ${local_image} 
+    build:
+      context: .
+      target: runtime
+    environment:
+      JWT_TOKEN: "7c06fae3cb84a3d49b07038be05b563cabc9f1a88878eeb30a233fe47f4a2797d2483c8c442495204a0ba229e21b631f88a36074adbb558bcbf168b7183dc026"
+      LOG_LEVEL: "INFORMATION"
+      DB_CONNECTION_STRING: "Server=postgres;Database=intergration-service-test;UserId=fitogram;Password=fitogram"
+      HANGFIRE_REDIS_ENDPOINT: "redis"
+      RABBITMQ_ENDPOINT: "rabbitmq"
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_USERNAME: "fitogram"
+      RABBITMQ_PASSWORD: "fitogram"
+    depends_on:
+      - postgres
+      - rabbitmq
+      - redis
+
+  test:
+    build:
+      context: .
+      target: build
+    command: dotnet test
+    environment:
+      JWT_TOKEN: "7c06fae3cb84a3d49b07038be05b563cabc9f1a88878eeb30a233fe47f4a2797d2483c8c442495204a0ba229e21b631f88a36074adbb558bcbf168b7183dc026"
+      LOG_LEVEL: "INFORMATION"
+      DB_CONNECTION_STRING: "Server=postgres;Database=integration-service-test;UserId=fitogram;Password=fitogram"
+      HANGFIRE_REDIS_ENDPOINT: "redis"
+      RABBITMQ_ENDPOINT: "rabbitmq"
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_USERNAME: "fitogram"
+      RABBITMQ_PASSWORD: "fitogram"
+    depends_on:
+      - postgres
+      - rabbitmq
+      - redis
+
+  redis:
+    image: redis:4-alpine
+    ports:
+      - "6379:6379"
+    expose:
+      - "6379"
+
+  rabbitmq:
+    image: rabbitmq:3.7.2-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: "fitogram"
+      RABBITMQ_DEFAULT_PASS: "fitogram"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    expose:
+      - "5672"
+      - "15672"
+
+  postgres:
+    image: postgres:10.8-alpine
+    environment:
+      POSTGRES_PASSWORD: "fitogram"
+      POSTGRES_USER: "fitogram"
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
