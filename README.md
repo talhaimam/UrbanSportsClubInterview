@@ -1,3 +1,4 @@
+[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=9468930&assignment_repo_type=AssignmentRepo)
 # Fitogram Interview Service
 
 This service is based on our booking system and has been stripped down for the HR interview. Please dig into the service and try to understand what it does. In the interview we will have a couple of questions around areas like Coding, Distributed Systems, Testing, Performance and more. As part of the test you will have two issues to solve (see below). Before you start developing, please create a new public repository on your GitHub account and upload the code. For each of the issues below create one Pull Request so its easier for all of us to discuss your changes together.
